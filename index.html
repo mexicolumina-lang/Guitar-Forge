@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090b10">
+  <meta name="description" content="Guitar Forge — academia y entrenador interactivo de guitarra eléctrica.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Guitar Forge">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <title>GUITAR FORGE</title>
+</head>
+<body>
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+  <header class="topbar">
+    <a class="brand" href="#" data-nav="home" aria-label="Guitar Forge inicio">
+      <span class="brand-mark">G<span>F</span></span>
+      <span class="brand-name">GUITAR<span>FORGE</span></span>
+    </a>
+    <div class="top-actions">
+      <span class="streak"><span class="flame">✦</span><b id="streakCount">0</b><small>RACHA</small></span>
+      <button class="avatar" data-nav="profile" aria-label="Perfil">GF</button>
+    </div>
+  </header>
+
+  <main id="app" class="app-shell">
+    <section class="view active" id="view-home">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="live-dot"></span> TU ESTUDIO PERSONAL</p>
+          <h1>MAKE<br><em>NOISE.</em><br>MAKE PROGRESS.</h1>
+          <p class="hero-sub">Cada minuto cuenta. Cada nota construye.</p>
+          <button class="btn btn-primary" data-action="start-session">INICIAR ENTRENAMIENTO <span>↗</span></button>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="hero-guitar">✳</div><div class="hero-stamp">PLAY<br>LOUD<br><b>STAY<br>SHARP</b></div>
+          <div class="hero-line"></div>
+        </div>
+      </div>
+
+      <div class="section-heading"><div><p class="eyebrow">TU EVOLUCIÓN</p><h2>Panel de control</h2></div><span class="date-chip" id="todayLabel"></span></div>
+      <div class="stats-grid">
+        <article class="stat-card"><span class="stat-icon cyan">◷</span><span class="stat-label">HOY</span><strong id="todayMinutes">0 <small>min</small></strong><span class="stat-foot">Tiempo de práctica</span></article>
+        <article class="stat-card"><span class="stat-icon pink">↗</span><span class="stat-label">ESTA SEMANA</span><strong id="weekMinutes">0 <small>min</small></strong><span class="stat-foot">Tiempo acumulado</span></article>
+        <article class="stat-card"><span class="stat-icon orange">✦</span><span class="stat-label">EJERCICIOS</span><strong id="tasksDone">0 <small>/ 5</small></strong><span class="stat-foot">Completados hoy</span></article>
+      </div>
+
+      <div class="content-grid">
+        <article class="panel daily-panel">
+          <div class="panel-head"><div><p class="eyebrow">PLAN DE HOY</p><h3>Tu rutina diaria</h3></div><button class="text-btn" data-nav="training">Ver rutina ↗</button></div>
+          <div id="homeChecklist" class="mini-checklist"></div>
+          <div class="progress-track"><span id="homeProgress"></span></div>
+          <p class="muted tiny" id="homeProgressText">0% completado</p>
+        </article>
+        <article class="panel focus-panel">
+          <p class="eyebrow">SIGUIENTE MISIÓN</p><span class="focus-tag">TÉCNICA · INTERMEDIO</span>
+          <h3>Conecta la<br><em>pentatónica</em></h3>
+          <p class="muted">Une las cinco posiciones para moverte por todo el mástil sin perder el fraseo.</p>
+          <button class="btn btn-outline" data-action="open-lesson" data-id="pentatonic">CONTINUAR CLASE <span>→</span></button>
+        </article>
+      </div>
+    </section>
+
+    <section class="view" id="view-academy">
+      <div class="page-intro"><p class="eyebrow">CONOCIMIENTO QUE SUENA</p><h1>THE <em>ACADEMY</em></h1><p class="muted">Aprende el lenguaje musical. Llévalo al diapasón. Hazlo tuyo.</p></div>
+      <div class="filter-row" id="courseFilters">
+        <button class="filter-chip active" data-filter="all">Todos</button>
+        <button class="filter-chip" data-filter="fundamentals">Fundamentos</button>
+        <button class="filter-chip" data-filter="scales">Escalas</button>
+        <button class="filter-chip" data-filter="harmony">Armonía</button>
+        <button class="filter-chip" data-filter="technique">Técnica</button>
+      </div>
+      <div id="courseList" class="course-grid"></div>
+      <div id="lessonDetail" class="lesson-detail hidden"></div>
+    </section>
+
+    <section class="view" id="view-training">
+      <div class="page-intro"><p class="eyebrow">DISCIPLINA DIARIA</p><h1>TRAINING <em>ROOM</em></h1><p class="muted">Pequeñas sesiones. Grandes resultados.</p></div>
+      <div class="training-layout">
+        <article class="panel warmup-card">
+          <div class="panel-head"><div><p class="eyebrow">PREPARA LAS MANOS</p><h2>Warm-up generator</h2></div><span class="round-icon">✳</span></div>
+          <p class="muted">Una secuencia equilibrada de 7 minutos para activar ambas manos. Toca relajado y detente si aparece dolor.</p>
+          <div id="warmupList" class="warmup-list"></div>
+          <button class="btn btn-primary full" data-action="shuffle-warmup">GENERAR OTRA RUTINA ↻</button>
+        </article>
+        <article class="panel routine-card">
+          <div class="panel-head"><div><p class="eyebrow">CHECKLIST</p><h2>Daily mission</h2></div><span class="date-chip">HOY</span></div>
+          <div id="dailyChecklist" class="daily-checklist"></div>
+          <div class="progress-track"><span id="trainingProgress"></span></div>
+          <p class="muted tiny" id="trainingProgressText">0 de 5 completados</p>
+        </article>
+      </div>
+      <article class="panel exercise-panel">
+        <div class="panel-head"><div><p class="eyebrow">EJERCICIO GUIADO</p><h2>Pentatónica menor · La</h2></div><span class="level-pill">INTERMEDIO</span></div>
+        <p class="muted">Primera posición en La menor. Usa índice en el traste 5 y meñique en el 8 de las cuerdas exteriores.</p>
+        <div id="exerciseFretboard"></div>
+        <div class="exercise-meta"><span>AFINACIÓN <b>ESTÁNDAR EADGBE</b></span><span>OBJETIVO <b>80 BPM</b></span><span>DIGITACIÓN <b>1 · 3 · 4</b></span></div>
+        <pre class="tab">e|----------------5-8-|
+B|------------5-8-----|
+G|--------5-7---------|
+D|----5-7-------------|
+A|-5-7----------------|
+E|-5-8----------------|</pre>
+        <button class="btn btn-outline" data-action="open-lesson" data-id="pentatonic">ABRIR CLASE COMPLETA ↗</button>
+      </article>
+    </section>
+
+    <section class="view" id="view-tools">
+      <div class="page-intro"><p class="eyebrow">TU BANCO DE TRABAJO</p><h1>THE <em>TOOLS</em></h1><p class="muted">Mide, escucha y registra tu progreso.</p></div>
+      <div class="tools-grid">
+        <article class="panel metronome-panel">
+          <div class="panel-head"><div><p class="eyebrow">TIME & PRECISION</p><h2>Metrónomo</h2></div><span class="round-icon">◉</span></div>
+          <div class="beat-display" id="beatDisplay"><span></span><span></span><span></span><span></span></div>
+          <div class="tempo-readout"><strong id="bpmValue">90</strong><small>BPM</small></div>
+          <input id="bpmSlider" class="range" type="range" min="30" max="240" value="90">
+          <div class="tempo-controls"><button class="step-btn" data-action="bpm-down">−</button><button class="tap-btn" data-action="tap-tempo">TAP TEMPO</button><button class="step-btn" data-action="bpm-up">+</button></div>
+          <div class="metro-options"><label>Compás <select id="timeSignature"><option value="4">4/4</option><option value="3">3/4</option><option value="6">6/8</option><option value="2">2/4</option></select></label><label>Sonido <select id="metroSound"><option value="click">Click</option><option value="wood">Wood</option></select></label></div>
+          <button class="btn btn-primary full" id="metroToggle" data-action="metro-toggle">INICIAR METRÓNOMO</button>
+          <p class="muted tiny center">El audio se activa después de pulsar iniciar.</p>
+        </article>
+        <article class="panel timer-panel">
+          <div class="panel-head"><div><p class="eyebrow">DEEP PRACTICE</p><h2>Session timer</h2></div><span class="round-icon">◷</span></div>
+          <div class="timer-ring"><div><strong id="timerDisplay">00:00</strong><small>TIEMPO DE SESIÓN</small></div></div>
+          <div class="timer-buttons"><button class="btn btn-primary" data-action="timer-toggle" id="timerToggle">INICIAR</button><button class="btn btn-quiet" data-action="timer-reset">REINICIAR</button></div>
+          <p class="muted tiny center" id="timerHint">Tu sesión se guardará al detener el cronómetro.</p>
+        </article>
+        <article class="panel tracker-panel">
+          <div class="panel-head"><div><p class="eyebrow">PERSONAL RECORDS</p><h2>BPM tracker</h2></div><span class="round-icon">↗</span></div>
+          <form id="recordForm" class="record-form">
+            <label>Técnica<input id="recordTechnique" required maxlength="50" placeholder="Ej. Alternate picking"></label>
+            <label>Velocidad (BPM)<input id="recordBpm" required type="number" min="20" max="400" placeholder="120"></label>
+            <label>Notas<input id="recordNotes" maxlength="120" placeholder="Limpio a tres repeticiones"></label>
+            <button class="btn btn-outline full" type="submit">GUARDAR RÉCORD +</button>
+          </form>
+          <div id="recordList" class="record-list"></div>
+        </article>
+        <article class="panel fretboard-tool">
+          <div class="panel-head"><div><p class="eyebrow">VISUALIZE THE NECK</p><h2>Fretboard lab</h2></div><span class="round-icon">⌁</span></div>
+          <div class="fret-controls"><label>Raíz<select id="rootSelect"></select></label><label>Escala<select id="scaleSelect"><option value="minorPent">Pentatónica menor</option><option value="majorPent">Pentatónica mayor</option><option value="major">Mayor</option><option value="minor">Menor natural</option><option value="blues">Blues</option><option value="dorian">Dórico</option><option value="mixolydian">Mixolidio</option></select></label></div>
+          <div id="mainFretboard"></div>
+          <div class="legend"><span><i class="legend-root"></i> Tónica</span><span><i class="legend-note"></i> Otras notas</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="view" id="view-profile">
+      <div class="page-intro"><p class="eyebrow">IDENTIDAD MUSICAL</p><h1>YOUR <em>PROFILE</em></h1><p class="muted">Tu progreso, tus objetivos, tu sonido.</p></div>
+      <article class="panel profile-card">
+        <div class="profile-avatar">GF</div><div><p class="eyebrow">GUITARIST</p><h2 id="profileName">Guitar Player</h2><p class="muted">Nivel en construcción · La constancia manda.</p></div>
+      </article>
+      <div class="stats-grid profile-stats">
+        <article class="stat-card"><span class="stat-label">TIEMPO TOTAL</span><strong id="totalMinutes">0 <small>min</small></strong></article>
+        <article class="stat-card"><span class="stat-label">RÉCORDS</span><strong id="recordCount">0</strong></article>
+        <article class="stat-card"><span class="stat-label">LECCIONES</span><strong id="lessonCount">0</strong></article>
+      </div>
+      <article class="panel settings-panel">
+        <div class="panel-head"><div><p class="eyebrow">PERSONALIZA</p><h2>Tu objetivo</h2></div></div>
+        <label class="setting-row">Nombre de guitarrista<input id="nameInput" maxlength="30" placeholder="Tu nombre"></label>
+        <label class="setting-row">Objetivo diario de práctica <select id="goalSelect"><option value="15">15 minutos</option><option value="30">30 minutos</option><option value="45">45 minutos</option><option value="60">60 minutos</option><option value="90">90 minutos</option></select></label>
+        <div class="data-actions"><button class="btn btn-outline" data-action="export-data">EXPORTAR DATOS JSON</button><label class="btn btn-quiet import-label">IMPORTAR JSON<input id="importFile" type="file" accept="application/json"></label></div>
+      </article>
+      <p class="footer-note">GUITAR FORGE · BUILT FOR THE LONG GAME.</p>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Navegación principal">
+    <button class="nav-item active" data-nav="home"><span>⌂</span><small>Inicio</small></button>
+    <button class="nav-item" data-nav="academy"><span>▤</span><small>Academia</small></button>
+    <button class="nav-item" data-nav="training"><span>✳</span><small>Entrenar</small></button>
+    <button class="nav-item" data-nav="tools"><span>◉</span><small>Herramientas</small></button>
+    <button class="nav-item" data-nav="profile"><span>◌</span><small>Perfil</small></button>
+  </nav>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js"></script>
+</body>
+</html>

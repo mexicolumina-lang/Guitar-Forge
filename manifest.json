@@ -1,0 +1,27 @@
+{
+  "id": "./",
+  "name": "GUITAR FORGE — Electric Guitar Academy",
+  "short_name": "Guitar Forge",
+  "description": "Academia y entrenador interactivo de guitarra eléctrica.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#090b10",
+  "theme_color": "#090b10",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
